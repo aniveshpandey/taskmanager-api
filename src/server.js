@@ -1,16 +1,16 @@
-const {TaskManager, taskFromJSON, sortByDate} = require('./taskmanager.js');
+const {TaskManager, taskFromJSON, sortByDate, filterByProp} = require('./taskmanager.js');
 const tm = new TaskManager();
 const express = require('express');
 const app = express();
 const port = 3000;
 const { checkSchema, validationResult } = require('express-validator');
-const { taskSchema, idBodySchema, idParamSchema} = require('./schema.js')
+const { taskSchema, idBodySchema, idParamSchema, prioritySchema} = require('./schema.js')
 app.use(express.json());
 
 app.get('/tasks', (req, res) => {
   try {
     const order = req.query.sort;
-    const taskArray = tm.readAllTasks();
+    const taskArray = tm.readAllTasksWithoutId();
     if(order) sortByDate(taskArray, order);
     res.status(200).send({sorted: order, array: taskArray});
   } catch (err) {
@@ -72,13 +72,20 @@ app.delete('/tasks', (req, res) => {
   }
 });
 
-app.get('/tasks/priority/:level', (req, res) => {
+app.get('/tasks/priority/:level', checkSchema(prioritySchema), (req, res) => {
   try {
+    validationResult(req).throw();
+    const level = req.params.level;
+    const taskArray = tm.readAllTasksWithoutId();
+    const responseBody = filterByProp(taskArray, "priority" , level);
+    res.status(200).send(responseBody);
   } catch(err){
-    res.status(400).send({error: err.message});
+    res.status(400).send({error: err.message || validationResult(req).array()});
   }
 });
 
 app.listen(port, () => {
   console.log(`TaskManager app listening on port ${port}`);
 });
+
+
