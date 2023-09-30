@@ -91,9 +91,9 @@ const _compareDateDescending = (task1, task2) => {
   };
 
 function  sortByDate (taskArray, order = 'asc') {
-  if (order == 'a' ){
+  if (order == 'asc' ){
     taskArray.sort(_compareDateAscending);
-  } else if (order == 'd') {
+  } else if (order == 'desc') {
     taskArray.sort(_compareDateDescending);
     } else throw new Error('Invalid sort order');
   }
