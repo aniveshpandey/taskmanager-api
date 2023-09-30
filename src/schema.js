@@ -47,5 +47,17 @@ const idBodySchema = {
     notEmpty: true,
     errorMessage: 'taskId in body is required for creating a task',
 }}; 
-
-module.exports = {taskSchema, idParamSchema, idBodySchema};
+const prioritySchema = {
+  'level': {
+  in: 'params',
+  optional: true,
+  custom: {
+    options: (value) => {
+      if (!['low', 'medium', 'high'].includes(value)) {
+        throw new Error('Priority should be "low", "medium", or "high"');
+    }
+    return true;
+  }
+}}};
+ 
+module.exports = {taskSchema, idParamSchema, idBodySchema, prioritySchema};
