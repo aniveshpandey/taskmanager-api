@@ -21,7 +21,7 @@ Before running the application, make sure you have the following installed:
 ```bash
     cd taskmanager-api/
     npm install
-    npm start
+    node start src/server.js
 ```
 
 The TaskManager app should now be running on http://localhost:3000.
@@ -98,7 +98,10 @@ Delete all tasks.
 
     URL: /tasks/priority/:level
     Method: GET
-   
+### Filter Tasks By Category
+
+    URL: /tasks/category/:tag
+    Method: GET
 ## Usage
 
 You can use this application to manage tasks, sort tasks by date, and perform CRUD (Create, Read, Update, Delete) operations on tasks.

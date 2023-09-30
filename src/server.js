@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const { checkSchema, validationResult } = require('express-validator');
-const { taskSchema, idBodySchema, idParamSchema, prioritySchema} = require('./schema.js')
+const { taskSchema, idBodySchema, idParamSchema, prioritySchema, tagSchema} = require('./schema.js')
 app.use(express.json());
 
 app.get('/tasks', (req, res) => {
@@ -84,8 +84,21 @@ app.get('/tasks/priority/:level', checkSchema(prioritySchema), (req, res) => {
   }
 });
 
+app.get('/tasks/category/:tag', checkSchema(tagSchema), (req, res) => {
+  try {
+    validationResult(req).throw();
+    if (!tag) throw new Error("tag error");
+    const tag = req.params.tag;
+    const taskArray = tm.readAllTasksWithoutId();
+    const responseBody = filterByProp(taskArray, "category", tag);
+    if(!responsbody) throw Error ("No ${tag} catagory exists");
+    res.status(200).send(responseBody);
+  } catch (err) {
+    res.status(400).send({error: err.message || validationResult(req).array()});
+  }
+});
+
 app.listen(port, () => {
   console.log(`TaskManager app listening on port ${port}`);
 });
-
 

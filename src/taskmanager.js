@@ -96,8 +96,6 @@ function sortByDate(array, order = 'asc') {
     })
   }else if (order === 'desc') {
     array.sort((a,b)=>{
-      console.log(a.value);
-      console.log(b.value);
       return b.creationDate - a.creationDate;})
   } else {
   throw new Error (`Invalid sort order ${order}`);

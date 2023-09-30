@@ -59,5 +59,12 @@ const prioritySchema = {
     return true;
   }
 }}};
+const tagSchema = {
+    "tag": {
+    in: 'params',
+    notEmpty: true,
+    errorMessage: 'Category is required',
+  },
  
-module.exports = {taskSchema, idParamSchema, idBodySchema, prioritySchema};
+} 
+module.exports = {taskSchema, idParamSchema, idBodySchema, prioritySchema, tagSchema};
