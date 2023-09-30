@@ -92,6 +92,13 @@ Delete all tasks.
     URL: /tasks
     Method: DELETE
 
+### Filter Tasks By Priority
+
+3 options: low, medium high
+
+    URL: /tasks/priority/:level
+    Method: GET
+   
 ## Usage
 
 You can use this application to manage tasks, sort tasks by date, and perform CRUD (Create, Read, Update, Delete) operations on tasks.
