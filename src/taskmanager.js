@@ -83,19 +83,19 @@ class TaskManager {
 
 
 
-const _compareDateAscending = (task1, task2) => {
-  return (task1.creationDate < task2.creationDate)? -1 : 1;
- };
-const _compareDateDescending = (task1, task2) => {
-  return (task1.creationDate > task2.creationDate)? -1 : 1;
-  };
-
-function  sortByDate (taskArray, order = 'asc') {
-  if (order == 'asc' ){
-    taskArray.sort(_compareDateAscending);
-  } else if (order == 'desc') {
-    taskArray.sort(_compareDateDescending);
-    } else throw new Error('Invalid sort order');
+function sortByDate(array, order = 'asc') {
+  if (order === 'asc') {
+    array.sort((a,b)=>a.value.date-b.value.date);
+  }else if (order === 'desc') {
+    array.sort((a,b)=>b.value.date-a.value.date);
+  }else {
+  throw new Error (`Invalid sort order ${order}`);
   }
+};
 
-module.exports  = {Task, TaskManager, taskFromJSON, sortByDate};
+
+function filterByProp (taskArray, prop, propValue) {
+  return taskArray.filter(task => task.value[prop] == propValue);
+}
+
+module.exports  = {Task, TaskManager, taskFromJSON, sortByDate, filterByProp};
