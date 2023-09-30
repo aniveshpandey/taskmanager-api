@@ -12,7 +12,7 @@ class Task {
     this.category = category;
     this.priority = priority;
     this.completed = completed;
-    this.creationDate = new Date();
+    this.creationDate = new Date().getTime();
   }
 } 
 
@@ -68,6 +68,12 @@ class TaskManager {
     this.map.forEach((value, key) => taskArray.push({ key, value }));
     return taskArray;
   }
+  readAllTasksWithoutId() {
+    this._errorNoTask();
+    const taskArray = [];
+    this.map.forEach((value) => taskArray.push(value));
+    return taskArray;
+  }
   // Delete all tasks
   deleteAllTasks() {
     this._errorNoTask();
@@ -85,17 +91,22 @@ class TaskManager {
 
 function sortByDate(array, order = 'asc') {
   if (order === 'asc') {
-    array.sort((a,b)=>a.value.date-b.value.date);
+    array.sort((a,b)=> {
+      return a.creationDate - b.creationDate;
+    })
   }else if (order === 'desc') {
-    array.sort((a,b)=>b.value.date-a.value.date);
-  }else {
+    array.sort((a,b)=>{
+      console.log(a.value);
+      console.log(b.value);
+      return b.creationDate - a.creationDate;})
+  } else {
   throw new Error (`Invalid sort order ${order}`);
   }
 };
 
 
 function filterByProp (taskArray, prop, propValue) {
-  return taskArray.filter(task => task.value[prop] == propValue);
+  return taskArray.filter(task => task[prop] == propValue);
 }
 
 module.exports  = {Task, TaskManager, taskFromJSON, sortByDate, filterByProp};
