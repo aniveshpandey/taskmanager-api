@@ -1,0 +1,15 @@
+{
+  "name": "taskmanager",
+  "version": "0.2.0",
+  "description": "Simple backend to manage tasks through RESTful APIs",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anivesh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1"
+  }
+}
