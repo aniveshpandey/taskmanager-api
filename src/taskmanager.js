@@ -81,9 +81,19 @@ class TaskManager {
   }
 }
 
-  function taskFromJSON (obj){
+function _stringToBoolean(string) {
+  switch (string){
+    case "true": return true;
+    case "false": return false;
+    default: 
+      throw new Error("Invalid boolean value");
+  }
+}
+
+function taskFromJSON (obj){
   if (!obj) return new Task();
-  const { title, description, category, priority, completed } = obj;
+  let { title, description, category, priority, completed } = obj;
+  completed = _stringToBoolean(completed);
   return new Task (title, description, category, priority, completed);
   };
 
@@ -104,7 +114,9 @@ function sortByDate(array, order = 'asc') {
 
 
 function filterByProp (taskArray, prop, propValue) {
+  if ((prop) === "completed") propValue = _stringToBoolean(propValue);
   return taskArray.filter(task => task[prop] == propValue);
 }
+
 
 module.exports  = {Task, TaskManager, taskFromJSON, sortByDate, filterByProp};

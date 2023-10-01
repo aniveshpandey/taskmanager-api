@@ -10,8 +10,10 @@ app.use(express.json());
 app.get('/tasks', (req, res) => {
   try {
     const order = req.query.sort;
-    const taskArray = tm.readAllTasksWithoutId();
+    const completed = req.query.completed;
+    let taskArray = tm.readAllTasksWithoutId();
     if(order) sortByDate(taskArray, order);
+    if(completed) taskArray = filterByProp( taskArray, "completed", completed);   
     res.status(200).send({sorted: order, array: taskArray});
   } catch (err) {
     res.status(400).send( {error: err.message});
