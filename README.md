@@ -102,6 +102,12 @@ Delete all tasks.
 
     URL: /tasks/category/:tag
     Method: GET
+### Filter Tasks By Completion
+
+    URL: /tasks?completed=true
+         /tasks?completed=false
+    Method: GET
+
 ## Usage
 
 You can use this application to manage tasks, sort tasks by date, and perform CRUD (Create, Read, Update, Delete) operations on tasks.
